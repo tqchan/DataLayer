@@ -42,7 +42,7 @@
             
         
         ]]>
-    </string><string name="app_name">DataLayer</string></file><file path="D:\Android\Application\DataLayer\Application\src\main\res\values\strings.xml" qualifiers=""><string name="start">Start</string><string name="start_wearable_activity">Start Wearable Activity</string><string name="send_photo">Send Photo</string><string name="take_photo">Take a Photo</string></file><file path="D:\Android\Application\DataLayer\Application\src\main\res\values\style.xml" qualifiers=""><style name="Divider">
+    </string><string name="app_name">DataLayer</string></file><file path="D:\Android\Application\DataLayer\Application\src\main\res\values\strings.xml" qualifiers=""><string name="start">Start</string><string name="start_wearable_activity">Start Wearable Activity</string><string name="send_photo">Send Photo</string><string name="select_photo">Select a Photo</string><string name="take_photo">Take a Photo</string><string name="clear">Clear Photos</string></file><file path="D:\Android\Application\DataLayer\Application\src\main\res\values\style.xml" qualifiers=""><style name="Divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">3dp</item>
         <item name="android:background">?android:attr/listDivider</item>

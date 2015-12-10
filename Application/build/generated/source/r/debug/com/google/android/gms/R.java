@@ -97,8 +97,8 @@ public final class R {
 		public static final int common_google_play_services_updating_text = 0x7f04001b;
 		public static final int common_google_play_services_updating_title = 0x7f04001c;
 		public static final int common_open_on_phone = 0x7f04001d;
-		public static final int common_signin_button_text = 0x7f040021;
-		public static final int common_signin_button_text_long = 0x7f040022;
+		public static final int common_signin_button_text = 0x7f040022;
+		public static final int common_signin_button_text_long = 0x7f040023;
 	}
 	public static final class style {
 	}

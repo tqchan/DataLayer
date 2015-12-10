@@ -51,6 +51,9 @@
     <eat-comment/>
     <string name="auth_google_play_services_client_facebook_display_name">Facebook</string>
     <string name="auth_google_play_services_client_google_display_name">Google</string>
+    <!-- From: file:/D:/Android/Application/DataLayer/Application/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="clear">Clear Photos</string>
     <!-- From: file:/D:/Android/Application/DataLayer/Application/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.1.0/res/values/common_strings.xml -->
     <eat-comment/>
     <string name="common_android_wear_notification_needs_update_text"><ns1:g id="app_name">%1$s</ns1:g> requires an update to the Android Wear app.</string>
@@ -102,6 +105,7 @@
     </string>
     <!-- From: file:/D:/Android/Application/DataLayer/Application/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="select_photo">Select a Photo</string>
     <string name="send_photo">Send Photo</string>
     <string name="start">Start</string>
     <string name="start_wearable_activity">Start Wearable Activity</string>

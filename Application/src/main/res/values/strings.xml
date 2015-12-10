@@ -17,6 +17,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="start_wearable_activity">Start Wearable Activity</string>
     <string name="start">Start</string>
+    <string name="clear">Clear Photos</string>
     <string name="take_photo">Take a Photo</string>
     <string name="send_photo">Send Photo</string>
+    <string name="select_photo">Select a Photo</string>
 </resources>

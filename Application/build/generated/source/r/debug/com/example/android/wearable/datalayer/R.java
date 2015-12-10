@@ -211,7 +211,8 @@ containing a value of this type.
     public static final class id {
         public static final int adjust_height=0x7f0a0000;
         public static final int adjust_width=0x7f0a0001;
-        public static final int data_item_list=0x7f0a000d;
+        public static final int clear_button=0x7f0a000d;
+        public static final int data_item_list=0x7f0a000e;
         public static final int divider=0x7f0a000b;
         public static final int imageView=0x7f0a0006;
         public static final int imageView2=0x7f0a000a;
@@ -234,6 +235,7 @@ containing a value of this type.
         public static final int app_name=0x7f04001e;
         public static final int auth_google_play_services_client_facebook_display_name=0x7f04001f;
         public static final int auth_google_play_services_client_google_display_name=0x7f040020;
+        public static final int clear=0x7f040021;
         public static final int common_android_wear_notification_needs_update_text=0x7f040000;
         public static final int common_android_wear_update_text=0x7f040001;
         public static final int common_android_wear_update_title=0x7f040002;
@@ -264,13 +266,14 @@ containing a value of this type.
         public static final int common_google_play_services_updating_text=0x7f04001b;
         public static final int common_google_play_services_updating_title=0x7f04001c;
         public static final int common_open_on_phone=0x7f04001d;
-        public static final int common_signin_button_text=0x7f040021;
-        public static final int common_signin_button_text_long=0x7f040022;
-        public static final int intro_message=0x7f040023;
-        public static final int send_photo=0x7f040024;
-        public static final int start=0x7f040025;
-        public static final int start_wearable_activity=0x7f040026;
-        public static final int take_photo=0x7f040027;
+        public static final int common_signin_button_text=0x7f040022;
+        public static final int common_signin_button_text_long=0x7f040023;
+        public static final int intro_message=0x7f040024;
+        public static final int select_photo=0x7f040025;
+        public static final int send_photo=0x7f040026;
+        public static final int start=0x7f040027;
+        public static final int start_wearable_activity=0x7f040028;
+        public static final int take_photo=0x7f040029;
     }
     public static final class style {
         public static final int AppTheme=0x7f060002;

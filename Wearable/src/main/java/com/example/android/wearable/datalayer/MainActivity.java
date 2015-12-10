@@ -26,6 +26,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.wearable.view.DotsPageIndicator;
 import android.support.wearable.view.FragmentGridPagerAdapter;
 import android.support.wearable.view.GridViewPager;
@@ -90,6 +91,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks,
     private GridViewPager mPager;
     private DataFragment mDataFragment;
     private AssetFragment mAssetFragment;
+    Vibrator mVibrator;
 
     @Override
     public void onCreate(Bundle b) {
@@ -102,6 +104,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks,
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+        mVibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
     }
 
     @Override
@@ -338,6 +341,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks,
                 LOGD(TAG, "Setting background image on second page..");
                 moveToPage(1);
                 mAssetFragment.setBackgroundImage(bitmap);
+                mVibrator.vibrate(100);
             }
         }
     }

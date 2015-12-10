@@ -21,7 +21,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,7 +35,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
+//import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -58,6 +60,7 @@ import com.google.android.gms.wearable.Wearable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -93,14 +96,17 @@ public class MainActivity extends Activity implements DataApi.DataListener,
     private boolean mResolvingError = false;
     private boolean mCameraSupported = false;
 
-    private ListView mDataItemList;
+//    private ListView mDataItemList;
     private Button mSendPhotoBtn;
     private ImageView mThumbView;
     private Bitmap mImageBitmap;
     private Button mSendPhotoBtn2;
     private ImageView mThumbView2;
-    private Bitmap mImageBitmap2;
+//    private Bitmap mImageBitmap2;
     private View mStartActivityBtn;
+    private View mClearBtn;
+//    private Bitmap mImageBitmap3;
+    private Bitmap mImageBitmap4;
 
     private DataItemAdapter mDataItemListAdapter;
     private Handler mHandler;
@@ -111,6 +117,9 @@ public class MainActivity extends Activity implements DataApi.DataListener,
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_IMAGE_CAPTURE2 = 2;
+    static final int REQUEST_SELECT_GALLERY = 3;
+
+    private Resources mResources;
 
     @Override
     public void onCreate(Bundle b) {
@@ -132,6 +141,7 @@ public class MainActivity extends Activity implements DataApi.DataListener,
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+        mResources = getResources();
     }
 
     @Override
@@ -142,21 +152,36 @@ public class MainActivity extends Activity implements DataApi.DataListener,
                     Bundle extras = data.getExtras();
                     mImageBitmap = (Bitmap) extras.get("data");
                     mThumbView.setImageBitmap(mImageBitmap);
+                    Log.d("width", "w:" + mThumbView.getWidth());
+                    Log.d("height", "h:" + mThumbView.getHeight());
                 }
                 break;
             case REQUEST_IMAGE_CAPTURE2:
                 if (resultCode == RESULT_OK) {
                     Bundle extras = data.getExtras();
-                    mImageBitmap2 = (Bitmap) extras.get("data");
+                    Bitmap mImageBitmap2 = (Bitmap) extras.get("data");
                     mThumbView2.setImageBitmap(mImageBitmap2);
                 }
                 break;
+            case REQUEST_SELECT_GALLERY:
+
+                if (resultCode == RESULT_OK) {
+                    try {
+                        InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                        Bitmap mImageBitmap3 = BitmapFactory.decodeStream(inputStream);
+                        mImageBitmap4 = Bitmap.createScaledBitmap(mImageBitmap3, 230, 230, false);
+                        if (inputStream != null) {
+                            inputStream.close();
+                        }
+                        mThumbView2.setImageBitmap(mImageBitmap4);
+                        Log.d("width2", "w:" + mThumbView2.getWidth());
+                        Log.d("height2", "h:" + mThumbView2.getHeight());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
         }
-//        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-//            Bundle extras = data.getExtras();
-//            mImageBitmap = (Bitmap) extras.get("data");
-//            mThumbView.setImageBitmap(mImageBitmap);
-//        }
     }
 
     @Override
@@ -196,6 +221,7 @@ public class MainActivity extends Activity implements DataApi.DataListener,
         LOGD(TAG, "Google API Client was connected");
         mResolvingError = false;
         mStartActivityBtn.setEnabled(true);
+        mClearBtn.setEnabled(true);
         mSendPhotoBtn.setEnabled(mCameraSupported);
         mSendPhotoBtn2.setEnabled(mCameraSupported);
         Wearable.DataApi.addListener(mGoogleApiClient, this);
@@ -207,6 +233,7 @@ public class MainActivity extends Activity implements DataApi.DataListener,
     public void onConnectionSuspended(int cause) {
         LOGD(TAG, "Connection to Google API client was suspended");
         mStartActivityBtn.setEnabled(false);
+        mClearBtn.setEnabled(false);
         mSendPhotoBtn.setEnabled(false);
         mSendPhotoBtn2.setEnabled(false);
     }
@@ -215,7 +242,7 @@ public class MainActivity extends Activity implements DataApi.DataListener,
     public void onConnectionFailed(ConnectionResult result) {
         if (mResolvingError) {
             // Already attempting to resolve an error.
-            return;
+//            return;
         } else if (result.hasResolution()) {
             try {
                 mResolvingError = true;
@@ -228,6 +255,7 @@ public class MainActivity extends Activity implements DataApi.DataListener,
             Log.e(TAG, "Connection to Google API client has failed");
             mResolvingError = false;
             mStartActivityBtn.setEnabled(false);
+            mClearBtn.setEnabled(false);
             mSendPhotoBtn.setEnabled(false);
             mSendPhotoBtn2.setEnabled(false);
             Wearable.DataApi.removeListener(mGoogleApiClient, this);
@@ -434,12 +462,24 @@ public class MainActivity extends Activity implements DataApi.DataListener,
         }
     }
 
-    private void dispatchTakePictureIntent2() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE2);
-        }
+//    private void dispatchTakePictureIntent2() {
+//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+//            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE2);
+//        }
+//    }
+
+    /**
+     * ファイル選択のテスト
+     */
+
+    private void selectPictureIntent() {
+        Intent selectPictureIntent = new Intent();
+        selectPictureIntent.setType("image/*");
+        selectPictureIntent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(selectPictureIntent, REQUEST_SELECT_GALLERY);
     }
+
 
     /**
      * Builds an {@link com.google.android.gms.wearable.Asset} from a bitmap. The image that we get
@@ -489,11 +529,16 @@ public class MainActivity extends Activity implements DataApi.DataListener,
                 dispatchTakePictureIntent();
                 break;
             case R.id.takePhoto2:
-                dispatchTakePictureIntent2();
+//                dispatchTakePictureIntent2();
+                selectPictureIntent();
                 break;
         }
+    }
 
-
+    public void onClearClick(View view) {
+        Bitmap icBitmap = BitmapFactory.decodeResource(mResources, R.drawable.ic_content_picture);
+        mThumbView.setImageBitmap(icBitmap);
+        mThumbView2.setImageBitmap(icBitmap);
     }
 
     public void onSendPhotoClick(View view) {
@@ -503,10 +548,15 @@ public class MainActivity extends Activity implements DataApi.DataListener,
                     sendPhoto(toAsset(mImageBitmap));
                 }
                 break;
+//            case R.id.sendPhoto2:
+//                if (null != mImageBitmap2 && mGoogleApiClient.isConnected()) {
+//                    sendPhoto(toAsset(mImageBitmap2));
+//                }
             case R.id.sendPhoto2:
-                if (null != mImageBitmap2 && mGoogleApiClient.isConnected()) {
-                    sendPhoto(toAsset(mImageBitmap2));
+                if (null != mImageBitmap4 && mGoogleApiClient.isConnected()) {
+                    sendPhoto(toAsset(mImageBitmap4));
                 }
+                break;
         }
 
     }
@@ -519,8 +569,9 @@ public class MainActivity extends Activity implements DataApi.DataListener,
         mThumbView = (ImageView) findViewById(R.id.imageView);
         mSendPhotoBtn2 = (Button) findViewById(R.id.sendPhoto2);
         mThumbView2 = (ImageView) findViewById(R.id.imageView2);
-        mDataItemList = (ListView) findViewById(R.id.data_item_list);
+//        mDataItemList = (ListView) findViewById(R.id.data_item_list);
         mStartActivityBtn = findViewById(R.id.start_wearable_activity);
+        mClearBtn = findViewById(R.id.clear_button);
     }
 
     /**

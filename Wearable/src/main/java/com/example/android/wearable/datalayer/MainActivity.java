@@ -341,7 +341,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks,
                 LOGD(TAG, "Setting background image on second page..");
                 moveToPage(1);
                 mAssetFragment.setBackgroundImage(bitmap);
-                mVibrator.vibrate(100);
+                mVibrator.vibrate(50);
             }
         }
     }
